@@ -4,77 +4,68 @@ package com.example.IKEA.db;
  * Created by Marvin on 2017/4/13.
  */
 
-public class Furniture {
-    private String pic;
-    private int id;
-    private String name;
-    private String type;
-    private String range;
-    private double price;
-    private String describe;
-    private String abs;
+public class Furniture {//家具
+    private String furnitureImg;//图片
+    private String furnitureName;//名称
+    private String furnitureType;//类别
+    private String furnitureRange;//范围
+    private double furniturePrice;//价格
+    private String furnitureDescribe;//描述
+    private String furnitureAttribute;//属性
 
-    public void setId(int id) {
-        this.id = id;
+    public void setFurnitureAttribute(String furnitureAttribute) {
+        this.furnitureAttribute = furnitureAttribute;
     }
 
-    public int getId() {
-        return id;
+    public double getFurniturePrice() {
+        return furniturePrice;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFurnitureDescribe(String furnitureDescribe) {
+        this.furnitureDescribe = furnitureDescribe;
     }
 
-    public double getPrice() {
-        return price;
+    public String getFurnitureAttribute() {
+        return furnitureAttribute;
     }
 
-    public void setAbs(String abs) {
-        this.abs = abs;
+    public void setFurnitureImg(String furnitureImg) {
+        this.furnitureImg = furnitureImg;
     }
 
-    public String getAbs() {
-        return abs;
+    public String getFurnitureDescribe() {
+        return furnitureDescribe;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
+    public void setFurnitureName(String furnitureName) {
+        this.furnitureName = furnitureName;
     }
 
-    public String getDescribe() {
-        return describe;
+    public String getFurnitureImg() {
+        return furnitureImg;
     }
 
-    public void setPic(String pic) {
-        this.pic = pic;
+    public void setFurniturePrice(double furniturePrice) {
+        this.furniturePrice = furniturePrice;
     }
 
-    public String getName() {
-        return name;
+    public String getFurnitureName() {
+        return furnitureName;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setFurnitureRange(String furnitureRange) {
+        this.furnitureRange = furnitureRange;
     }
 
-    public String getPic() {
-        return pic;
+    public String getFurnitureRange() {
+        return furnitureRange;
     }
 
-    public void setRange(String range) {
-        this.range = range;
+    public void setFurnitureType(String furnitureType) {
+        this.furnitureType = furnitureType;
     }
 
-    public String getRange() {
-        return range;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getType() {
-        return type;
+    public String getFurnitureType() {
+        return furnitureType;
     }
 }

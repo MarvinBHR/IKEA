@@ -4,22 +4,14 @@ package com.example.IKEA.db;
  * Created by Marvin on 2017/4/13.
  */
 
-public class Member {
-    private int id;
-    private String password;
-    private  String sex;
-    private String age;
-    private String email;
-    private String phone;
-    private String address;
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
-    }
+public class Member {//用户
+    private String memberName;//姓名
+    private String memberPassword;//密码
+    private  String sex;//性别
+    private String age;//年龄
+    private String email;//邮箱
+    private String phone;//电话
+    private String address;//地址
 
     public void setAddress(String address) {
         this.address = address;
@@ -45,12 +37,20 @@ public class Member {
         return email;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public void setMemberPassword(String memberPassword) {
+        this.memberPassword = memberPassword;
+    }
+
+    public String getMemberPassword() {
+        return memberPassword;
     }
 
     public void setPhone(String phone) {

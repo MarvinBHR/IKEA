@@ -5,6 +5,6 @@
     <list>
         <mapping class="com.example.IKEA.db.Member"/>
         <mapping class="com.example.IKEA.db.Furniture"/>
-        <mapping class="com.example.IKEA.db.Order"/>
+        <mapping class="com.example.IKEA.db.MemberOrder"/>
     </list>
 </litepal>

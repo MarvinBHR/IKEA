@@ -4,22 +4,21 @@ package com.example.IKEA.db;
  * Created by Marvin on 2017/4/13.
  */
 
-public class Order {
-    private int id;
-    private int furnitureId;
-    private int memberId;
-    private double sum;
+public class MemberOrder {//订单
+    private int furnitureId;//家具ID
+    private int memberId;//用户ID
+    private double totalPrice;//总价
 
     public void setFurnitureId(int furnitureId) {
         this.furnitureId = furnitureId;
     }
 
-    public double getSum() {
-        return sum;
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public double getTotalPrice() {
+        return totalPrice;
     }
 
     public int getFurnitureId() {
@@ -30,13 +29,7 @@ public class Order {
         this.memberId = memberId;
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setSum(double sum) {
-        this.sum = sum;
-    }
 
     public int getMemberId() {
         return memberId;
