@@ -1,10 +1,12 @@
 package com.example.IKEA.db;
 
+import org.litepal.crud.DataSupport;
+
 /**
  * Created by Marvin on 2017/4/13.
  */
 
-public class Furniture {//家具
+public class Furniture extends DataSupport{//家具
     private String furnitureImg;//图片
     private String furnitureName;//名称
     private String furnitureType;//类别

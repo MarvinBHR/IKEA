@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<group android:checkableBehavior="single"
+    android:id="@+id/nav_menu">
+    <item
+        android:id="@+id/nav_personal"
+        android:icon="@drawable/ic_personal"
+        android:title="个人"/>
+    <item
+        android:id="@+id/nav_shopping_car"
+        android:icon="@drawable/ic_shopping_car"
+        android:title="购物车"/>
+    <item
+        android:id="@+id/nav_my_order"
+        android:icon="@drawable/ic_my_order"
+        android:title="我的订单"/>
+    <item
+        android:id="@+id/nva_quit"
+        android:icon="@drawable/ic_quit"
+        android:title="退出"/>
+</group>
+</menu>
