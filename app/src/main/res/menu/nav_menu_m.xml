@@ -3,6 +3,10 @@
     <group android:checkableBehavior="single"
         android:id="@+id/nav_menu">
         <item
+            android:id="@+id/nav_to_home"
+            android:icon="@drawable/ic_home"
+            android:title="主页"/>
+        <item
             android:id="@+id/nav_manager"
             android:icon="@drawable/ic_manager"
             android:title="管理员"/>
@@ -12,8 +16,8 @@
             android:title="添加商品"/>
         <item
             android:id="@+id/nav_manage_user"
-            android:icon="@drawable/ic_personal"
-            android:title="用户管理"/>
+            android:icon="@drawable/ic_manage_user"
+            android:title="查看用户"/>
         <item
             android:id="@+id/nva_quit"
             android:icon="@drawable/ic_quit"

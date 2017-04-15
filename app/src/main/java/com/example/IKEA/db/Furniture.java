@@ -14,6 +14,15 @@ public class Furniture extends DataSupport{//家具
     private double furniturePrice;//价格
     private String furnitureDescribe;//描述
     private String furnitureAttribute;//属性
+    private long id;//id
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public void setFurnitureAttribute(String furnitureAttribute) {
         this.furnitureAttribute = furnitureAttribute;

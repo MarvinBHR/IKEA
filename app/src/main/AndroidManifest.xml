@@ -19,7 +19,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddFurniture" />
         <activity android:name=".Home" />
         <activity android:name=".RegisterActivity" />
 
@@ -33,6 +32,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <activity android:name=".FurnitureActivity"></activity>
     </application>
 
 </manifest>

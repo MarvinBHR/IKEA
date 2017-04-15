@@ -11,6 +11,15 @@ public class MemberOrder extends DataSupport{//订单
     private int memberId;//用户ID
     private double totalPrice;//总价
     private boolean pay;//是否支付
+    private long id;
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getId() {
+        return id;
+    }
 
     public void setPay(boolean pay) {
         this.pay = pay;

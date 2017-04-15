@@ -18,6 +18,15 @@ public class Member extends DataSupport implements Parcelable{//用户
     private String phone;//电话
     private String address;//地址
     private String headPic;//头像
+    private long id;
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getId() {
+        return id;
+    }
 
     public String getHeadPic() {
         return headPic;
