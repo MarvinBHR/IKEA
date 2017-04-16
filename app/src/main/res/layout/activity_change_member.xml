@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_home"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <!--主页内容-->
-    <android.support.design.widget.CoordinatorLayout
+    android:layout_height="match_parent"
+    android:scrollbars="none">
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/activity_change_member"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!--标题栏-->
-        <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <include layout="@layout/title"/>
-        </android.support.design.widget.AppBarLayout>
-        <!--产品列表-->
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/home_body_recycle"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-        </android.support.v4.widget.SwipeRefreshLayout>
-        <!--添加产品-->
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary">
+            <TextView
+                android:id="@+id/title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="个人资料"
+                android:textColor="#fff"
+                android:textSize="20sp"/>
+            <Button
+                android:id="@+id/back_button_on_change"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ic_back"/>
+        </RelativeLayout>
         <LinearLayout
-            android:id="@+id/add_furniture"
             android:orientation="vertical"
-            android:visibility="gone"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="15dp">
             <LinearLayout
                 android:orientation="horizontal"
@@ -43,71 +44,13 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:textSize="18sp"
-                    android:text="产品名称：" />
+                    android:text="用户名：" />
                 <EditText
-                    android:id="@+id/furniture_name"
+                    android:id="@+id/change_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
-                    android:maxLength="20"
-                    android:hint="必填"/>
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="60dp">
-                <TextView
-                    android:layout_width="90dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="18sp"
-                    android:text="产品类别：" />
-                <EditText
-                    android:id="@+id/furniture_type"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    android:maxLength="20"
-                    android:hint="必填"/>
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="60dp">
-                <TextView
-                    android:layout_width="90dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="18sp"
-                    android:text="产品范围：" />
-                <EditText
-                    android:id="@+id/furniture_range"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    android:maxLength="20"
-                    android:hint="必填"/>
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="60dp">
-                <TextView
-                    android:layout_width="90dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="18sp"
-                    android:text="产品价格：" />
-                <EditText
-                    android:id="@+id/furniture_price"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    android:text="0"
                     android:maxLength="10"
                     android:hint="必填"/>
             </LinearLayout>
@@ -120,14 +63,94 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:textSize="18sp"
-                    android:text="产品描述：" />
+                    android:text="性别：" />
+                <RadioGroup
+                    android:id="@+id/change_radio"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                    <RadioButton
+                        android:id="@+id/radio_man_on_change"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="男"
+                        android:textSize="18sp"/>
+                    <RadioButton
+                        android:id="@+id/radio_woman_on_change"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="女"
+                        android:textSize="18sp"/>
+                </RadioGroup>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="18sp"
+                    android:text="年龄：" />
                 <EditText
-                    android:id="@+id/furniture_describe"
+                    android:id="@+id/change_age"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
-                    android:maxLines="3"
+                    android:maxLength="10"/>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="18sp"
+                    android:text="邮箱：" />
+                <EditText
+                    android:id="@+id/change_email"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="18sp"
+                    android:text="电话：" />
+                <EditText
+                    android:id="@+id/change_phone"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="18sp"
+                    android:text="地址：" />
+                <EditText
+                    android:id="@+id/change_address"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
                     android:hint="必填"/>
             </LinearLayout>
             <LinearLayout
@@ -139,35 +162,16 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:textSize="18sp"
-                    android:text="产品属性：" />
-                <EditText
-                    android:id="@+id/furniture_attribute"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    android:maxLength="20"
-                    android:hint="必填"/>
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="60dp">
-                <TextView
-                    android:layout_width="90dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="18sp"
-                    android:text="上传图片：" />
+                    android:text="上传头像：" />
                 <ImageView
-                    android:id="@+id/furniture_pic"
+                    android:id="@+id/change_head_pic"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/furniture_pic_default"/>
+                    android:src="@drawable/head_pic_default"/>
                 <Button
-                    android:id="@+id/add_open_album"
+                    android:id="@+id/change_open_album"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
@@ -179,7 +183,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp">
                 <Button
-                    android:id="@+id/add_furniture_ok"
+                    android:id="@+id/ok_on_change"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="50dp"
@@ -188,7 +192,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"/>
                 <Button
-                    android:id="@+id/add_furniture_cancel"
+                    android:id="@+id/cancel_on_change"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="50dp"
@@ -198,44 +202,5 @@
                     android:layout_marginTop="15dp"/>
             </LinearLayout>
         </LinearLayout>
-        <!--添加产品完-->
-        <!--查看会员-->
-        <ListView
-            android:id="@+id/check_member"
-            android:visibility="gone"
-            android:layout_marginTop="?attr/actionBarSize"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </ListView>
-        <!--查看会员完-->
-        <!--管理员资料-->
-        <LinearLayout
-            android:orientation="vertical"
-            android:id="@+id/show_manager"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="15dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-            <TextView
-                android:id="@+id/manager_name"
-                android:text="管理员名称：Manager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"/>
-            <TextView
-                android:textSize="20dp"
-                android:text="更多信息....."
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <!--管理员资料完-->
-    </android.support.design.widget.CoordinatorLayout>
-    <!--侧边菜单内容-->
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header"/>
-</android.support.v4.widget.DrawerLayout>
+    </LinearLayout>
+</ScrollView>

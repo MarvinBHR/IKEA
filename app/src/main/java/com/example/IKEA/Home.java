@@ -29,6 +29,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,6 +54,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Home extends BaseActivity implements View.OnClickListener {
+    private static final String TAG = "Home";
     public static final int CHOOSE_PHOTO=2;
     //刷新
     private SwipeRefreshLayout swipeRefresh;
@@ -88,6 +90,8 @@ public class Home extends BaseActivity implements View.OnClickListener {
     private Member member = new Member();
     //查看会员
     private ListView checkMember;
+    //查看管理员
+    private LinearLayout showManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +115,7 @@ public class Home extends BaseActivity implements View.OnClickListener {
         navHeadPic = (CircleImageView) header.findViewById(R.id.nav_head_pic);
         checkMember = (ListView)findViewById(R.id.check_member);
         addFurniture = (LinearLayout)findViewById(R.id.add_furniture);
+        showManager = (LinearLayout) findViewById(R.id.show_manager);
         title.setText(member.getMemberName());
         name.setText(member.getMemberName());
         if(member.getEmail() != null && !"".equals(member.getEmail())){//处理邮箱
@@ -146,6 +151,21 @@ public class Home extends BaseActivity implements View.OnClickListener {
                         break;
                     case R.id.nav_to_home://返回主页
                         toHome();
+                        break;
+                    case R.id.nav_manager://管理员资料
+                        showManager();
+                        break;
+                    case R.id.nav_personal://会员资料
+                        Intent intent =new Intent(Home.this,ChangeMember.class);
+                        intent.putExtra("memberId",member.getId());
+                        drawer.closeDrawers();
+                        startActivity(intent);
+                        break;
+                    case R.id.nav_change_password://修改密码
+                        Intent intent2 = new Intent(Home.this,ChangePassword.class);
+                        intent2.putExtra("memberId",member.getId());
+                        drawer.closeDrawers();
+                        startActivity(intent2);
                     default:
                         break;
                 }
@@ -162,11 +182,21 @@ public class Home extends BaseActivity implements View.OnClickListener {
         });
     }
 
+    //展示管理员信息
+    private void showManager(){
+        recyclerView.setVisibility(View.GONE);
+        checkMember.setVisibility(View.GONE);
+        addFurniture.setVisibility(View.GONE);
+        showManager.setVisibility(View.VISIBLE);
+        drawer.closeDrawers();
+    }
+
     //返回主页
     private void toHome(){
         drawer.closeDrawers();
         recyclerView.setVisibility(View.VISIBLE);
         checkMember.setVisibility(View.GONE);
+        showManager.setVisibility(View.GONE);
         addFurniture.setVisibility(View.GONE);
     }
     //初始化家具列表
@@ -231,6 +261,7 @@ public class Home extends BaseActivity implements View.OnClickListener {
         //显示页面
         recyclerView.setVisibility(View.GONE);
         checkMember.setVisibility(View.GONE);
+        showManager.setVisibility(View.GONE);
         addFurniture.setVisibility(View.VISIBLE);
         //注册点击事件
         addOpenAlbum.setOnClickListener(this);
@@ -401,15 +432,20 @@ public class Home extends BaseActivity implements View.OnClickListener {
         closeAdd();
     }
 
+    //查看会员
     private void checkMember(){
+        addFurniture.setVisibility(View.GONE);
+        showManager.setVisibility(View.GONE);
         recyclerView.setVisibility(View.GONE);
         checkMember.setVisibility(View.VISIBLE);
         List<Member> memberList = DataSupport.findAll(Member.class);
         StringBuffer mList = new StringBuffer();
         int i = 0;
         for(Member m:memberList){
-            String aMember ="姓名："+m.getMemberName()+" 年龄："+m.getAge()+" 性别："+m.getSex()+",";
-            mList.append(aMember);
+            if(!m.getMemberName().equals("Manager")) {
+                String aMember = "姓名：" + m.getMemberName() + " 年龄：" + m.getAge() + " 性别：" + m.getSex() + ",";
+                mList.append(aMember);
+            }
         }
         String[] mList1 = mList.toString().split(",");
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(Home.this,android.R.layout.simple_list_item_1,mList1);

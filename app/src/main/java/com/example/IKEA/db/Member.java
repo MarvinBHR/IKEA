@@ -107,6 +107,7 @@ public class Member extends DataSupport implements Parcelable{//用户
         dest.writeString(phone);
         dest.writeString(address);
         dest.writeString(headPic);
+        dest.writeLong(id);
     }
      public static final Parcelable.Creator<Member>CREATOR = new Parcelable.Creator<Member>(){
          @Override
@@ -120,6 +121,7 @@ public class Member extends DataSupport implements Parcelable{//用户
              member.phone = source.readString();
              member.address = source.readString();
              member.headPic = source.readString();
+             member.id = source.readLong();
              return member;
          }
 

@@ -100,11 +100,14 @@ public class FurnitureActivity extends BaseActivity implements View.OnClickListe
                 deleteFurniture();
                 break;
             case R.id.change_furniture://修改产品信息
+                changeFurniture();
                 break;
             default:
                 break;
         }
     }
+
+    //删除产品
     private void deleteFurniture(){
         AlertDialog.Builder dialog = new AlertDialog.Builder(FurnitureActivity.this);
         dialog.setTitle("提示");
@@ -123,5 +126,12 @@ public class FurnitureActivity extends BaseActivity implements View.OnClickListe
             }
         });
         dialog.show();
+    }
+
+    //修改产品
+    private void changeFurniture(){
+        Intent intent = new Intent(FurnitureActivity.this,ChangeFurniture.class);
+        intent.putExtra("furnitureId",furnitureId);
+        startActivity(intent);
     }
 }

@@ -32,7 +32,10 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".FurnitureActivity"></activity>
+        <activity android:name=".FurnitureActivity" />
+        <activity android:name=".ChangeFurniture" />
+        <activity android:name=".ChangeMember" />
+        <activity android:name=".ChangePassword"></activity>
     </application>
 
 </manifest>

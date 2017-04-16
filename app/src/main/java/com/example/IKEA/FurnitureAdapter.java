@@ -53,7 +53,6 @@ public class FurnitureAdapter extends RecyclerView.Adapter<FurnitureAdapter.View
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG,holder.toString()+"..."+v.toString());
                 int position = holder.getAdapterPosition();
                 Furniture furniture = mFurniture.get(position);
                 Intent intent = new Intent(mContext, FurnitureActivity.class);
