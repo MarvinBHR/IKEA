@@ -57,7 +57,7 @@ public class FurnitureAdapter extends RecyclerView.Adapter<FurnitureAdapter.View
                 Furniture furniture = mFurniture.get(position);
                 Intent intent = new Intent(mContext, FurnitureActivity.class);
                 intent.putExtra(FurnitureActivity.FURNITURE_NAME,furniture.getFurnitureName());
-                intent.putExtra(FurnitureActivity.FURNITURE_PRICE,String.valueOf(furniture.getFurniturePrice()));
+                intent.putExtra(FurnitureActivity.FURNITURE_PRICE,furniture.getFurniturePrice());
                 intent.putExtra(FurnitureActivity.FURNITURE_ATTRIBUTE,furniture.getFurnitureAttribute());
                 intent.putExtra(FurnitureActivity.FURNITURE_DESCRIBE,furniture.getFurnitureDescribe());
                 intent.putExtra(FurnitureActivity.FURNITURE_PIC,furniture.getFurnitureImg());
