@@ -154,8 +154,8 @@ public class FurnitureActivity extends BaseActivity implements View.OnClickListe
                 Boolean flag = false;
                 List<MemberOrder> memberOrderList = DataSupport.findAll(MemberOrder.class);
                 for(MemberOrder m:memberOrderList){
-                    if(m.getMemberId() == member.getId() && m.getFurnitureId() == furnitureId){
-                        flag = true;//该用户添加过该商品
+                    if(m.getMemberId() == member.getId() && m.getFurnitureId() == furnitureId && !m.isCreate() && !m.isPay()){
+                        flag = true;//该用户购物车中有该商品
                         sameId = m.getId();
                     }
                 }

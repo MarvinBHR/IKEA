@@ -173,6 +173,18 @@ public class Home extends BaseActivity implements View.OnClickListener {
                         drawer.closeDrawers();
                         startActivity(intent3);
                         break;
+                    case R.id.nav_my_order:
+                        Intent intent4 = new Intent(Home.this,MyOrderActivity.class);
+                        intent4.putExtra("member_data",member);
+                        drawer.closeDrawers();
+                        startActivity(intent4);
+                        break;
+                    case R.id.nav_history:
+                        Intent intent5 = new Intent(Home.this,MyHistoryActivity.class);
+                        intent5.putExtra("member_data",member);
+                        drawer.closeDrawers();
+                        startActivity(intent5);
+                        break;
                     default:
                         break;
                 }

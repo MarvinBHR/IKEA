@@ -6,7 +6,7 @@
     android:scrollbars="none">
     <LinearLayout
         android:orientation="vertical"
-        android:id="@+id/activity_shopping_car"
+        android:id="@+id/activity_my_order"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <RelativeLayout
@@ -14,15 +14,15 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary">
             <TextView
-                android:id="@+id/shopping_car_title_text"
+                android:id="@+id/my_order_title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="购物车"
+                android:text="我的订单"
                 android:textColor="#fff"
                 android:textSize="20sp"/>
             <Button
-                android:id="@+id/back_button_on_shopping_car"
+                android:id="@+id/back_button_on_my_order"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginLeft="10dp"
@@ -31,17 +31,17 @@
                 android:background="@drawable/ic_back"/>
         </RelativeLayout>
         <TextView
-            android:id="@+id/car_empty"
+            android:id="@+id/order_empty"
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
-            android:text="购物车里还没有东西，快去逛逛吧~"
+            android:text="还没有订单哦~"
             android:textSize="20dp"
             android:layout_margin="5dp"/>
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_of_shopping_car"
+            android:id="@+id/recycler_of_my_order"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
         <LinearLayout
@@ -55,7 +55,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content" />
             <TextView
-                android:id="@+id/total_price_in_shopping_car"
+                android:id="@+id/total_price_in_my_order"
                 android:layout_width="0dp"
                 android:layout_margin="10dp"
                 android:textSize="25dp"
@@ -69,19 +69,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <Button
-                android:id="@+id/create_order"
+                android:id="@+id/pay_order"
                 android:layout_width="0dp"
                 android:layout_margin="5dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="生成订单"/>
+                android:text="支付"/>
             <Button
-                android:id="@+id/clear_shopping_car"
+                android:id="@+id/clear_my_order"
                 android:layout_width="0dp"
                 android:layout_margin="5dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="清空购物车"/>
+                android:text="删除所有订单"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
+

@@ -36,7 +36,9 @@
         <activity android:name=".ChangeFurniture" />
         <activity android:name=".ChangeMember" />
         <activity android:name=".ChangePassword" />
-        <activity android:name=".ShoppingCar"></activity>
+        <activity android:name=".ShoppingCar" />
+        <activity android:name=".MyOrderActivity" />
+        <activity android:name=".MyHistoryActivity"></activity>
     </application>
 
 </manifest>

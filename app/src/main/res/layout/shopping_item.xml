@@ -45,20 +45,32 @@
                 android:text="单价："
                 android:textSize="20dp"
                 android:layout_width="0dp"
-                android:layout_weight="4"
+                android:layout_weight="3"
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/furniture_price_in_shopping_car"
+                android:gravity="left"
                 android:textSize="20dp"
                 android:layout_width="0dp"
                 android:layout_weight="4"
                 android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/add_in_shopping_car"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/ic_add_furniture"/>
             <TextView
                 android:id="@+id/furniture_amount_in_shopping_car"
                 android:textSize="20dp"
+                android:layout_marginLeft="3dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/sub_in_shopping_car"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/ic_sub_furniture"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

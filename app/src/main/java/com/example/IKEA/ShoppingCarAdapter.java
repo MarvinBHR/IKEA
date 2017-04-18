@@ -6,8 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.IKEA.db.Furniture;
@@ -31,6 +33,8 @@ public class ShoppingCarAdapter extends RecyclerView.Adapter<ShoppingCarAdapter.
         TextView furnitureNameInShoppingCar;
         TextView furniturePriceInShoppingCar;
         TextView furnitureAmountInShoppingCar;
+        Button addInShoppingCar;
+        Button subInShopping;
         public ViewHolder(View view){
             super(view);
             cardView = (CardView)view;
@@ -38,6 +42,8 @@ public class ShoppingCarAdapter extends RecyclerView.Adapter<ShoppingCarAdapter.
             furnitureNameInShoppingCar = (TextView)view.findViewById(R.id.furniture_name_in_shopping_car);
             furniturePriceInShoppingCar = (TextView)view.findViewById(R.id.furniture_price_in_shopping_car);
             furnitureAmountInShoppingCar = (TextView)view.findViewById(R.id.furniture_amount_in_shopping_car);
+            addInShoppingCar = (Button)view.findViewById(R.id.add_in_shopping_car);
+            subInShopping = (Button)view.findViewById(R.id.sub_in_shopping_car);
         }
     }
 
@@ -51,7 +57,8 @@ public class ShoppingCarAdapter extends RecyclerView.Adapter<ShoppingCarAdapter.
             mContext = parent.getContext();
         }
         View view = LayoutInflater.from(mContext).inflate(R.layout.shopping_item,parent,false);
-        return new ViewHolder(view);
+        final ViewHolder holder = new ViewHolder(view);
+        return holder;
     }
 
     @Override
@@ -64,7 +71,7 @@ public class ShoppingCarAdapter extends RecyclerView.Adapter<ShoppingCarAdapter.
         Glide.with(mContext).load(furniture.getFurnitureImg()).into(holder.furniturePicInShoppingCar);
         holder.furnitureNameInShoppingCar.setText(furniture.getFurnitureName());
         holder.furniturePriceInShoppingCar.setText(furniture.getFurniturePrice()+"");
-        holder.furnitureAmountInShoppingCar.setText("×"+memberOrder.getAmount());
+        holder.furnitureAmountInShoppingCar.setText(memberOrder.getAmount()+"");
     }
 
     @Override

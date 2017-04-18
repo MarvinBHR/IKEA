@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.IKEA.db.Member;
 import com.example.IKEA.db.MemberOrder;
@@ -29,12 +30,14 @@ public class ShoppingCar extends BaseActivity implements View.OnClickListener {
     private Button createOrder;
     private Button clear;
     private Member member;
+    private TextView carEmpty;
     private double totalPrice = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_car);
         recyclerOfShoppingCar = (RecyclerView)findViewById(R.id.recycler_of_shopping_car);
+        carEmpty = (TextView)findViewById(R.id.car_empty);
         back = (Button) findViewById(R.id.back_button_on_shopping_car);
         createOrder =(Button)findViewById(R.id.create_order);
         clear = (Button)findViewById(R.id.clear_shopping_car);
@@ -55,6 +58,7 @@ public class ShoppingCar extends BaseActivity implements View.OnClickListener {
                 finish();
                 break;
             case R.id.create_order:
+                createOrderInShoppingCar();
                 break;
             case R.id.clear_shopping_car:
                 clearShoppingCar();
@@ -83,6 +87,8 @@ public class ShoppingCar extends BaseActivity implements View.OnClickListener {
             recyclerOfShoppingCar.setLayoutManager(layoutManager);
             shoppingCarAdapter = new ShoppingCarAdapter(memberOrderList);
             recyclerOfShoppingCar.setAdapter(shoppingCarAdapter);
+        }else{
+            carEmpty.setVisibility(View.VISIBLE);
         }
     }
 
@@ -94,8 +100,42 @@ public class ShoppingCar extends BaseActivity implements View.OnClickListener {
         dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                DataSupport.deleteAll(MemberOrder.class,"create = ? and pay = ? and memberId = ?","0","0",member.getId()+"");
-                finish();
+                if(memberOrderList.size()>0) {
+                    DataSupport.deleteAll(MemberOrder.class, "create = ? and pay = ? and memberId = ?", "0", "0", member.getId() + "");
+                    finish();
+                }else {
+                    Toast.makeText(ShoppingCar.this,"购物车已经空了哦！",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        dialog.show();
+    }
+
+    private void createOrderInShoppingCar(){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(ShoppingCar.this);
+        dialog.setTitle("提示");
+        dialog.setMessage("是否生成订单？");
+        dialog.setCancelable(true);
+        dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(memberOrderList.size()>0) {
+                    for (int i = 0; i < memberOrderList.size(); i++) {
+                        MemberOrder m = memberOrderList.get(i);
+                        long id = memberOrderList.get(i).getId();
+                        m.setCreate(true);
+                        m.update(id);
+                    }
+                    Toast.makeText(ShoppingCar.this, "生成订单成功", Toast.LENGTH_SHORT).show();
+                    finish();
+                }else{
+                    Toast.makeText(ShoppingCar.this,"购物车还空着呢！",Toast.LENGTH_SHORT).show();
+                }
             }
         });
         dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
