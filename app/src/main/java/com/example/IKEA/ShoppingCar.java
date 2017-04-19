@@ -25,13 +25,13 @@ public class ShoppingCar extends BaseActivity implements View.OnClickListener {
     private List<MemberOrder> memberOrderList= new ArrayList<>();
     private RecyclerView recyclerOfShoppingCar;
     private ShoppingCarAdapter shoppingCarAdapter;
-    private TextView totalPriceInShoppingCar;
+    public TextView totalPriceInShoppingCar;
     private Button back;
     private Button createOrder;
     private Button clear;
     private Member member;
     private TextView carEmpty;
-    private double totalPrice = 0;
+    public double totalPrice = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +128,7 @@ public class ShoppingCar extends BaseActivity implements View.OnClickListener {
                     for (int i = 0; i < memberOrderList.size(); i++) {
                         MemberOrder m = memberOrderList.get(i);
                         long id = memberOrderList.get(i).getId();
+                        DataSupport.deleteAll(MemberOrder.class,"delete = ?","1");
                         m.setCreate(true);
                         m.update(id);
                     }

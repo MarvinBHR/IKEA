@@ -13,8 +13,16 @@ public class MemberOrder extends DataSupport{//订单
     private boolean create;//是否已生成订单：通过该字段确定在购物车中显示还是在订单中显示
     private boolean pay;//是否支付：通过该字段确定在订单中显示还是在历史中显示
     private int amount;//购买数量
+    private boolean delete;
     private long id;
 
+    public void setDelete(boolean delete) {
+        this.delete = delete;
+    }
+
+    public boolean isDelete() {
+        return delete;
+    }
 
     public int getAmount() {
         return amount;

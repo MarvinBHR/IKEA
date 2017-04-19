@@ -190,6 +190,7 @@ public class FurnitureActivity extends BaseActivity implements View.OnClickListe
                     memberOrder.setTotalPrice(furniturePrice);
                     memberOrder.setPay(false);
                     memberOrder.setCreate(false);
+                    memberOrder.setDelete(false);
                     memberOrder.save();
                 }
             }
