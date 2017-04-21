@@ -12,24 +12,24 @@ public class MemberOrder extends DataSupport{//订单
     private double totalPrice;//总价
     private boolean create;//是否已生成订单：通过该字段确定在购物车中显示还是在订单中显示
     private boolean pay;//是否支付：通过该字段确定在订单中显示还是在历史中显示
-    private int amount;//购买数量
-    private boolean delete;
+    private int furnitureAmount;//购买数量
+    private boolean deleteFlag;//删除标记 false（0）:默认值，不删除；true（1）：删除
     private long id;
 
-    public void setDelete(boolean delete) {
-        this.delete = delete;
+    public void setDeleteFlag(boolean deleteFlag) {
+        this.deleteFlag = deleteFlag;
     }
 
-    public boolean isDelete() {
-        return delete;
+    public boolean isDeleteFlag() {
+        return deleteFlag;
     }
 
-    public int getAmount() {
-        return amount;
+    public int getFurnitureAmount() {
+        return furnitureAmount;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setFurnitureAmount(int furnitureAmount) {
+        this.furnitureAmount = furnitureAmount;
     }
 
     public void setCreate(boolean create) {

@@ -65,7 +65,7 @@ public class MyHistoryAdapter extends RecyclerView.Adapter<MyHistoryAdapter.View
         Glide.with(mContext).load(furniture.getFurnitureImg()).into(holder.furniturePicInMyHistory);
         holder.furnitureNameInMyHistory.setText(furniture.getFurnitureName());
         holder.furniturePriceInMyHistory.setText(furniture.getFurniturePrice()+"");
-        holder.furnitureAmountInMyHistory.setText("×"+memberOrder.getAmount());
+        holder.furnitureAmountInMyHistory.setText("×"+memberOrder.getFurnitureAmount());
     }
 
     @Override

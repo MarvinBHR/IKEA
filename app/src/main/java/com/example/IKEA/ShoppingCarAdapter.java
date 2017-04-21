@@ -76,19 +76,29 @@ public class ShoppingCarAdapter extends RecyclerView.Adapter<ShoppingCarAdapter.
         Glide.with(mContext).load(furniture.getFurnitureImg()).into(holder.furniturePicInShoppingCar);
         holder.furnitureNameInShoppingCar.setText(furniture.getFurnitureName());
         holder.furniturePriceInShoppingCar.setText(furniture.getFurniturePrice()+"");
-        holder.furnitureAmountInShoppingCar.setText(memberOrder.getAmount()+"");
+        holder.furnitureAmountInShoppingCar.setText(memberOrder.getFurnitureAmount()+"");
         holder.addInShoppingCar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(memberOrder.isDelete()){
-                   Alert("提示","该商品已被删除，再去添加吧~！");
-                }else {
-                    holder.furnitureAmountInShoppingCar.setText(memberOrder.getAmount() + 1 + "");
-                    memberOrder.setAmount(memberOrder.getAmount() + 1);
+                if(memberOrder.isDeleteFlag()){//从0开始加1
+                    memberOrder.setFurnitureAmount(1);
+                    memberOrder.setTotalPrice(furniture.getFurniturePrice());
+                    memberOrder.setToDefault("deleteFlag");//改变删除记号
+                    //memberOrder.updateAll("id = ?",memberOrderId+"");
+                    memberOrder.update(memberOrderId);
+                    holder.furnitureAmountInShoppingCar.setText(memberOrder.getFurnitureAmount()+"");
+                    LinearLayout linearLayout = (LinearLayout) holder.cardView.getParent().getParent();
+                    final TextView total = (TextView) linearLayout.findViewById(R.id.total_price_in_shopping_car);
+                    double newTotal = Double.valueOf(total.getText().toString()) + furniture.getFurniturePrice();
+                    total.setText(newTotal + "");
+                }else {//从非0开始加
+                    holder.furnitureAmountInShoppingCar.setText(memberOrder.getFurnitureAmount() + 1 + "");
+                    memberOrder.setFurnitureAmount(memberOrder.getFurnitureAmount() + 1);
                     memberOrder.setTotalPrice(memberOrder.getTotalPrice() + furniture.getFurniturePrice());
+                    //memberOrder.updateAll("id = ?",memberOrderId+"");
                     memberOrder.update(memberOrderId);
                     LinearLayout linearLayout = (LinearLayout) holder.cardView.getParent().getParent();
-                    TextView total = (TextView) linearLayout.findViewById(R.id.total_price_in_shopping_car);
+                    final TextView total = (TextView) linearLayout.findViewById(R.id.total_price_in_shopping_car);
                     double newTotal = Double.valueOf(total.getText().toString()) + furniture.getFurniturePrice();
                     total.setText(newTotal + "");
                 }
@@ -97,18 +107,19 @@ public class ShoppingCarAdapter extends RecyclerView.Adapter<ShoppingCarAdapter.
         holder.subInShoppingCar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int m = memberOrder.getAmount() -1;
-                if(m > 0) {
+                int m = memberOrder.getFurnitureAmount() -1;
+                if(m > 0) {//还有商品，正常处理
                     holder.furnitureAmountInShoppingCar.setText(m + "");
-                    memberOrder.setAmount(m);
+                    memberOrder.setFurnitureAmount(m);
                     double p = memberOrder.getTotalPrice() - furniture.getFurniturePrice();
                     memberOrder.setTotalPrice(p);
+                    //memberOrder.updateAll("id = ?",memberOrderId+"");
                     memberOrder.update(memberOrderId);
                     LinearLayout linearLayout = (LinearLayout) holder.cardView.getParent().getParent();
-                    TextView total = (TextView) linearLayout.findViewById(R.id.total_price_in_shopping_car);
+                    final TextView total = (TextView) linearLayout.findViewById(R.id.total_price_in_shopping_car);
                     double newTotal = Double.valueOf(total.getText().toString()) - furniture.getFurniturePrice();
                     total.setText(newTotal + "");
-                }else if(m == 0){
+                }else if(m == 0){//商品为0
                     AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
                     dialog.setTitle("提示");
                     dialog.setMessage("确定删除该商品吗？");
@@ -116,14 +127,17 @@ public class ShoppingCarAdapter extends RecyclerView.Adapter<ShoppingCarAdapter.
                     dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            if(memberOrder.isDelete()){
-                                Alert("提示","该商品已被删除，再去添加吧~！");
-                            }else {
-                                holder.furnitureAmountInShoppingCar.setText(String.valueOf(0));
-                                memberOrder.setDelete(true);
+                            if(memberOrder.isDeleteFlag()){
+                                Alert("提示","该商品个数已经是0了哦！");
+                            }else {//标记为删除，生成订单或退出购物车时删除
+                                holder.furnitureAmountInShoppingCar.setText(0+"");
+                                memberOrder.setToDefault("furnitureAmount");
+                                memberOrder.setToDefault("totalPrice");
+                                memberOrder.setDeleteFlag(true);
+                                //memberOrder.updateAll("id = ?",memberOrderId+"");
                                 memberOrder.update(memberOrderId);
                                 LinearLayout linearLayout = (LinearLayout) holder.cardView.getParent().getParent();
-                                TextView total = (TextView) linearLayout.findViewById(R.id.total_price_in_shopping_car);
+                                final TextView total = (TextView) linearLayout.findViewById(R.id.total_price_in_shopping_car);
                                 double newTotal = Double.valueOf(total.getText().toString()) - furniture.getFurniturePrice();
                                 total.setText(newTotal + "");
                                 Toast.makeText(mContext, "删除成功", Toast.LENGTH_SHORT).show();

@@ -55,6 +55,7 @@ public class ShoppingCar extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.back_button_on_shopping_car:
+                DataSupport.deleteAll(MemberOrder.class,"deleteFlag = ?","1");
                 finish();
                 break;
             case R.id.create_order:
@@ -128,7 +129,7 @@ public class ShoppingCar extends BaseActivity implements View.OnClickListener {
                     for (int i = 0; i < memberOrderList.size(); i++) {
                         MemberOrder m = memberOrderList.get(i);
                         long id = memberOrderList.get(i).getId();
-                        DataSupport.deleteAll(MemberOrder.class,"delete = ?","1");
+                        DataSupport.deleteAll(MemberOrder.class,"deleteFlag = ?","1");
                         m.setCreate(true);
                         m.update(id);
                     }

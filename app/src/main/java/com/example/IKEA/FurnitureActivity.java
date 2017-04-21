@@ -169,9 +169,9 @@ public class FurnitureActivity extends BaseActivity implements View.OnClickListe
                         public void onClick(DialogInterface dialog, int which) {
                             MemberOrder memberOrder = new MemberOrder();
                             MemberOrder oldMemberOrder = DataSupport.find(MemberOrder.class,sameId);
-                            int amount = oldMemberOrder.getAmount();
+                            int amount = oldMemberOrder.getFurnitureAmount();
                             double total = oldMemberOrder.getTotalPrice();
-                            memberOrder.setAmount(amount+1);
+                            memberOrder.setFurnitureAmount(amount+1);
                             memberOrder.setTotalPrice(total+furniturePrice);
                             memberOrder.update(sameId);
                         }
@@ -184,13 +184,13 @@ public class FurnitureActivity extends BaseActivity implements View.OnClickListe
                     dialog2.show();
                 }else{//未购买过，新增
                     MemberOrder memberOrder = new MemberOrder();
-                    memberOrder.setAmount(1);
+                    memberOrder.setFurnitureAmount(1);
                     memberOrder.setMemberId(member.getId());
                     memberOrder.setFurnitureId(furnitureId);
                     memberOrder.setTotalPrice(furniturePrice);
                     memberOrder.setPay(false);
                     memberOrder.setCreate(false);
-                    memberOrder.setDelete(false);
+                    memberOrder.setDeleteFlag(false);
                     memberOrder.save();
                 }
             }

@@ -66,7 +66,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.ViewHold
         Glide.with(mContext).load(furniture.getFurnitureImg()).into(holder.furniturePicInMyOrder);
         holder.furnitureNameInMyOrder.setText(furniture.getFurnitureName());
         holder.furniturePriceInMyOrder.setText(furniture.getFurniturePrice()+"");
-        holder.furnitureAmountInMyOrder.setText("×"+memberOrder.getAmount());
+        holder.furnitureAmountInMyOrder.setText("×"+memberOrder.getFurnitureAmount());
     }
 
     @Override
