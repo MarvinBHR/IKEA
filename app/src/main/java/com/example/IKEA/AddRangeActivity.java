@@ -44,6 +44,7 @@ public class AddRangeActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onRefresh() {
                 showRange();
+                refreshRange.setRefreshing(false);
             }
         });
     }

@@ -37,6 +37,14 @@ public class AddTypeActivity extends BaseActivity implements View.OnClickListene
         back.setOnClickListener(this);
         addTypeButton.setOnClickListener(this);
         showType();
+        refreshType.setColorSchemeResources(R.color.colorPrimary);
+        refreshType.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                showType();
+                refreshType.setRefreshing(false);
+            }
+        });
     }
 
     private boolean initType(){
