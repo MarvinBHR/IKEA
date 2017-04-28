@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.IKEA.db.Member;
+import com.example.IKEA.db.Range;
+import com.example.IKEA.db.Type;
 
 import org.litepal.LitePal;
 import org.litepal.crud.DataSupport;
@@ -29,6 +31,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         setContentView(R.layout.activity_main);
         LitePal.getDatabase();//创建数据库
         addManager();//添加管理员
+        addRange();//添加范围
+        addType();//添加类型
         login = (Button)findViewById(R.id.login);
         register = (Button)findViewById(R.id.register);
         mainName = (TextView)findViewById(R.id.main_name);
@@ -83,7 +87,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         if(members.size() == 0){
             Alert("登陆错误","用户名或密码错误");
         }else if(members.size()>1){
-            Alert("数据库错误","请联系客服人员");
+            Alert("数据库错误","请联系客服人员");//出现同名（可能因测试数据产生）
         }else{
             Member member = members.get(0);
             Intent intent = new Intent(MainActivity.this,Home.class);
@@ -125,5 +129,44 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             member.setHeadPic("none");
             member.save();
         }
+    }
+
+    private void addRange(){
+        List<Range> ranges = DataSupport.findAll(Range.class);
+        if(ranges.size()<=0){
+            inputRange("客厅");
+            inputRange("厨房");
+            inputRange("卧室");
+            inputRange("卫生间");
+            inputRange("餐厅");
+            inputRange("阳台");
+            inputRange("儿童");
+        }
+    }
+
+    private void inputRange(String rangeName){
+        Range range = new Range();
+        range.setRangeName(rangeName);
+        range.save();
+    }
+
+    private void addType(){
+        List<Type> types = DataSupport.findAll(Type.class);
+        if(types.size()<=0){
+            inputType("桌子");
+            inputType("椅子");
+            inputType("沙发");
+            inputType("茶几");
+            inputType("床");
+            inputType("床垫");
+            inputType("柜子");
+            inputType("玩具");
+        }
+    }
+
+    private void inputType(String typeName){
+        Type type = new Type();
+        type.setTypeName(typeName);
+        type.save();
     }
 }

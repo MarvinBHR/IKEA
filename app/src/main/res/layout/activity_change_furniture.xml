@@ -5,7 +5,8 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_home_background">
     <android.support.v7.widget.Toolbar
         android:id="@+id/change_furniture_toolbar"
         android:layout_width="match_parent"
@@ -42,7 +43,7 @@
                 android:layout_gravity="center_vertical"
                 android:textSize="18sp"
                 android:text="产品类别：" />
-            <EditText
+            <Spinner
                 android:id="@+id/furniture_type_to_change"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -61,7 +62,7 @@
                 android:layout_gravity="center_vertical"
                 android:textSize="18sp"
                 android:text="产品范围：" />
-            <EditText
+            <Spinner
                 android:id="@+id/furniture_range_to_change"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

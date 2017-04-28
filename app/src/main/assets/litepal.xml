@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <litepal>
     <dbname value="IKEA"/>
-    <version value="4" />
+    <version value="6" />
     <list>
         <mapping class="com.example.IKEA.db.Member"/>
         <mapping class="com.example.IKEA.db.Furniture"/>
         <mapping class="com.example.IKEA.db.MemberOrder"/>
+        <mapping class="com.example.IKEA.db.Range"/>
+        <mapping class="com.example.IKEA.db.Type"/>
     </list>
 </litepal>

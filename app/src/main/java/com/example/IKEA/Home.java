@@ -27,23 +27,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.ScrollingTabContainerView;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.IKEA.db.Furniture;
 import com.example.IKEA.db.Member;
+import com.example.IKEA.db.Range;
+import com.example.IKEA.db.Type;
 
 import org.litepal.crud.DataSupport;
 
@@ -56,6 +61,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Home extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "Home";
     public static final int CHOOSE_PHOTO=2;
+    private ArrayAdapter rangeAdapter;//范围适配器
+    private String selectedRange;//要保存的范围
+    private ArrayAdapter typeAdapter;//类型适配器
+    private String selectedType;//要保存的类别
     //刷新
     private SwipeRefreshLayout swipeRefresh;
     //家具列表
@@ -76,8 +85,8 @@ public class Home extends BaseActivity implements View.OnClickListener {
     //添加商品
     private LinearLayout addFurniture;
     private EditText furnitureName;
-    private EditText furnitureType;
-    private EditText furnitureRange;
+    private Spinner furnitureType;
+    private Spinner furnitureRange;
     private EditText furniturePrice;
     private EditText furnitureDescribe;
     private EditText furnitureAttribute;
@@ -100,7 +109,7 @@ public class Home extends BaseActivity implements View.OnClickListener {
         navView =(NavigationView)findViewById(R.id.nav_view);
         title = (TextView)findViewById(R.id.title);
         member = (Member) getIntent().getParcelableExtra("member_data");
-        if(!member.getMemberName().equals("Manager")){
+        if(!member.getMemberName().equals("Manager")){//判断登录身份，提供不同菜单
             navView.inflateMenu(R.menu.nav_menu);
         }else if(member.getMemberName().equals("Manager")){
             navView.inflateMenu(R.menu.nav_menu_m);
@@ -113,6 +122,7 @@ public class Home extends BaseActivity implements View.OnClickListener {
         name = (TextView) header.findViewById(R.id.nav_name);
         email = (TextView) header.findViewById(R.id.nav_email);
         navHeadPic = (CircleImageView) header.findViewById(R.id.nav_head_pic);
+        //隐藏在主页上的内容
         checkMember = (ListView)findViewById(R.id.check_member);
         addFurniture = (LinearLayout)findViewById(R.id.add_furniture);
         showManager = (LinearLayout) findViewById(R.id.show_manager);
@@ -146,8 +156,16 @@ public class Home extends BaseActivity implements View.OnClickListener {
                     case R.id.nav_add://添加产品
                         addFurniture();
                         break;
-                    case R.id.nav_manage_user://查看会员
+                    case R.id.nav_show_forms://查看报表
                         checkMember();
+                        break;
+                    case R.id.nav_add_range://管理范围
+                        Intent intent6 = new Intent(Home.this,AddRangeActivity.class);
+                        startActivity(intent6);
+                        break;
+                    case R.id.nav_add_type://管理种类
+                        Intent intent7 = new Intent(Home.this,AddTypeActivity.class);
+                        startActivity(intent7);
                         break;
                     case R.id.nav_to_home://返回主页
                         toHome();
@@ -167,19 +185,19 @@ public class Home extends BaseActivity implements View.OnClickListener {
                         drawer.closeDrawers();
                         startActivity(intent2);
                         break;
-                    case R.id.nav_shopping_car:
+                    case R.id.nav_shopping_car://购物车
                         Intent intent3 = new Intent(Home.this,ShoppingCar.class);
                         intent3.putExtra("member_data",member);
                         drawer.closeDrawers();
                         startActivity(intent3);
                         break;
-                    case R.id.nav_my_order:
+                    case R.id.nav_my_order://我的订单
                         Intent intent4 = new Intent(Home.this,MyOrderActivity.class);
                         intent4.putExtra("member_data",member);
                         drawer.closeDrawers();
                         startActivity(intent4);
                         break;
-                    case R.id.nav_history:
+                    case R.id.nav_history://历史记录
                         Intent intent5 = new Intent(Home.this,MyHistoryActivity.class);
                         intent5.putExtra("member_data",member);
                         drawer.closeDrawers();
@@ -196,7 +214,8 @@ public class Home extends BaseActivity implements View.OnClickListener {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-               refreshFurniture();
+                refreshFurniture();
+                swipeRefresh.setRefreshing(false);
             }
         });
     }
@@ -267,8 +286,54 @@ public class Home extends BaseActivity implements View.OnClickListener {
     private void addFurniture(){
         //初始化控件
         furnitureName = (EditText)findViewById(R.id.furniture_name);
-        furnitureType = (EditText)findViewById(R.id.furniture_type);
-        furnitureRange = (EditText)findViewById(R.id.furniture_range);
+        furnitureType = (Spinner) findViewById(R.id.furniture_type);
+        //产品类别下拉菜单初始化
+        List<Type> typeList = DataSupport.findAll(Type.class);
+        StringBuilder typeNameBuffer = new StringBuilder();
+        for(Type t:typeList){
+            typeNameBuffer.append(t.getTypeName());
+            typeNameBuffer.append(",");
+        }
+        final String[] typeNameList = typeNameBuffer.toString().split(",");
+        typeAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,typeNameList);
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);//下拉菜单风格
+        furnitureType.setAdapter(typeAdapter);
+        furnitureType.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedType = typeNameList[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        //产品类别初始化结束
+        furnitureRange = (Spinner) findViewById(R.id.furniture_range);
+        //产品范围下拉菜单初始化
+        List<Range> rangeList = DataSupport.findAll(Range.class);//所有范围
+        StringBuffer rangeNameBuffer = new StringBuffer();
+        for(Range r : rangeList){
+            rangeNameBuffer.append(r.getRangeName());
+            rangeNameBuffer.append(",");
+        }
+        final String[] rangeNameList = rangeNameBuffer.toString().split(",");
+        rangeAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,rangeNameList);//适配下拉菜单
+        rangeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);//下拉菜单风格
+        furnitureRange.setAdapter(rangeAdapter);
+        furnitureRange.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    selectedRange = rangeNameList[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        //范围初始化结束
         furniturePrice = (EditText)findViewById(R.id.furniture_price);
         furniturePrice.setInputType(InputType.TYPE_CLASS_NUMBER);//价格只能是数字
         furnitureDescribe = (EditText)findViewById(R.id.furniture_describe);
@@ -398,8 +463,6 @@ public class Home extends BaseActivity implements View.OnClickListener {
     private void closeAdd(){
         //清空
         furnitureName.setText("");
-        furnitureType.setText("");
-        furnitureRange.setText("");
         furnitureDescribe.setText("");
         furnitureAttribute.setText("");
         furniturePrice.setText("");
@@ -413,8 +476,8 @@ public class Home extends BaseActivity implements View.OnClickListener {
     private void saveAdd(){
         //获取要保存的字段
         String furnitureNameToSave = furnitureName.getText().toString();
-        String furnitureTypeToSave = furnitureType.getText().toString();
-        String furnitureRangeToSave = furnitureRange.getText().toString();
+        String furnitureTypeToSave = selectedType;
+        String furnitureRangeToSave = selectedRange;
         double furniturePriceToSave =Double.valueOf(furniturePrice.getText().toString());
         String furnitureDescribeToSave = furnitureDescribe.getText().toString();
         String furnitureAttributeToSave = furnitureAttribute.getText().toString();
@@ -452,6 +515,7 @@ public class Home extends BaseActivity implements View.OnClickListener {
     }
 
     //查看会员
+    //TODO 改为查看报表
     private void checkMember(){
         addFurniture.setVisibility(View.GONE);
         showManager.setVisibility(View.GONE);

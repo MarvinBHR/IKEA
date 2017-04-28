@@ -15,9 +15,17 @@
             android:icon="@drawable/ic_add"
             android:title="添加商品"/>
         <item
-            android:id="@+id/nav_manage_user"
-            android:icon="@drawable/ic_manage_user"
-            android:title="查看用户"/>
+            android:id="@+id/nav_show_forms"
+            android:icon="@drawable/ic_show_forms"
+            android:title="查看报表"/>
+        <item
+            android:id="@+id/nav_add_range"
+            android:icon="@drawable/ic_add_range"
+            android:title="管理范围"/>
+        <item
+            android:id="@+id/nav_add_type"
+            android:icon="@drawable/ic_add_type"
+            android:title="管理种类"/>
         <item
             android:id="@+id/nva_quit"
             android:icon="@drawable/ic_quit"

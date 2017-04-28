@@ -89,7 +89,7 @@
                     android:layout_gravity="center_vertical"
                     android:textSize="18sp"
                     android:text="产品类别：" />
-                <EditText
+                <Spinner
                     android:id="@+id/furniture_type"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -108,7 +108,7 @@
                     android:layout_gravity="center_vertical"
                     android:textSize="18sp"
                     android:text="产品范围：" />
-                <EditText
+                <Spinner
                     android:id="@+id/furniture_range"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

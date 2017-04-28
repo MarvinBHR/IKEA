@@ -24,13 +24,18 @@ import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.IKEA.db.Furniture;
+import com.example.IKEA.db.Range;
+import com.example.IKEA.db.Type;
 
 import org.litepal.crud.DataSupport;
 
@@ -38,11 +43,15 @@ import java.util.List;
 
 public class ChangeFurniture extends AppCompatActivity implements View.OnClickListener{
     public static final int CHOOSE_PHOTO=2;
+    private ArrayAdapter typeAdapter;//类别适配器
+    private String selectedType;//要保存的类别
+    private ArrayAdapter rangeAdapter;//范围适配器
+    private String selectedRange;//要保存的范围
     private long furnitureId;
     private LinearLayout changeFurniture;
     private EditText furnitureName;
-    private EditText furnitureType;
-    private EditText furnitureRange;
+    private Spinner furnitureType;
+    private Spinner furnitureRange;
     private EditText furniturePrice;
     private EditText furnitureDescribe;
     private EditText furnitureAttribute;
@@ -57,14 +66,70 @@ public class ChangeFurniture extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_furniture);
-        //获得产品Id
+        //获取要更改的产品
         Intent intent = getIntent();
         furnitureId = intent.getLongExtra("furnitureId",0);
+        furnitureToChange = DataSupport.find(Furniture.class,furnitureId);
         //初始化控件
         changeFurniture = (LinearLayout)findViewById(R.id.to_change_furniture);
         furnitureName = (EditText)findViewById(R.id.furniture_name_to_change);
-        furnitureType = (EditText) findViewById(R.id.furniture_type_to_change);
-        furnitureRange = (EditText)findViewById(R.id.furniture_range_to_change);
+        furnitureType = (Spinner) findViewById(R.id.furniture_type_to_change);
+        //初始化类别下拉框
+        List<Type> typeList = DataSupport.findAll(Type.class);//所有范围
+        StringBuilder typeNameBuffer = new StringBuilder();
+        for(Type t:typeList){
+            typeNameBuffer.append(t.getTypeName());
+            typeNameBuffer.append(",");
+        }
+        final String[] typeNameList = typeNameBuffer.toString().split(",");
+        typeAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,typeNameList);
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        furnitureType.setAdapter(typeAdapter);
+        //设置默认值
+        int typePosition = getPosition(typeNameList,furnitureToChange.getFurnitureType());
+        furnitureType.setSelection(typePosition,true);
+        furnitureType.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedType = typeNameList[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        //类别下拉框初始化结束
+
+        furnitureRange = (Spinner) findViewById(R.id.furniture_range_to_change);
+        //初始化范围下拉框
+        List<Range> rangeList = DataSupport.findAll(Range.class);//所有范围
+        StringBuffer rangeNameBuffer = new StringBuffer();
+        for(Range r : rangeList){
+            rangeNameBuffer.append(r.getRangeName());
+            rangeNameBuffer.append(",");
+        }
+        final String[] rangeNameList = rangeNameBuffer.toString().split(",");
+        rangeAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,rangeNameList);//适配下拉菜单
+        rangeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);//下拉菜单风格
+        furnitureRange.setAdapter(rangeAdapter);
+        //设置默认值
+        int rangePosition = getPosition(rangeNameList,furnitureToChange.getFurnitureRange());
+        furnitureRange.setSelection(rangePosition,true);
+        furnitureRange.setOnItemSelectedListener(new Spinner.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedRange = rangeNameList[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        //范围下拉框初始化结束
+
+        //填入原始资料
         furniturePrice = (EditText)findViewById(R.id.furniture_price_to_change);
         furniturePrice.setInputType(InputType.TYPE_CLASS_NUMBER);
         furnitureDescribe = (EditText)findViewById(R.id.furniture_describe_to_change);
@@ -73,10 +138,7 @@ public class ChangeFurniture extends AppCompatActivity implements View.OnClickLi
         changeOpenAlbum = (Button)findViewById(R.id.change_open_album);
         changeFurnitureOk = (Button)findViewById(R.id.change_furniture_ok);
         changeFurnitureCancel = (Button)findViewById(R.id.change_furniture_cancel);
-        furnitureToChange = DataSupport.find(Furniture.class,furnitureId);
         furnitureName.setText(furnitureToChange.getFurnitureName());
-        furnitureType.setText(furnitureToChange.getFurnitureType());
-        furnitureRange.setText(furnitureToChange.getFurnitureRange());
         furniturePrice.setText(furnitureToChange.getFurniturePrice()+"");
         furnitureDescribe.setText(furnitureToChange.getFurnitureDescribe());
         furnitureAttribute.setText(furnitureToChange.getFurnitureAttribute());
@@ -93,6 +155,17 @@ public class ChangeFurniture extends AppCompatActivity implements View.OnClickLi
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+    }
+
+    //获取位置
+    private int getPosition(String[] nameList,String name){
+        int i = 0;
+        for(;i<nameList.length;i++){
+            if(nameList[i].equals(name)){
+                return i;
+            }
+        }
+        return i;
     }
 
     @Override
@@ -136,9 +209,9 @@ public class ChangeFurniture extends AppCompatActivity implements View.OnClickLi
             }
         }
         furniture.setFurnitureName(furnitureName.getText().toString());
-        furniture.setFurnitureType(furnitureType.getText().toString());
+        furniture.setFurnitureType(selectedType);
         furniture.setFurniturePrice(Double.valueOf(furniturePrice.getText().toString()));
-        furniture.setFurnitureRange(furnitureRange.getText().toString());
+        furniture.setFurnitureRange(selectedRange);
         furniture.setFurnitureDescribe(furnitureDescribe.getText().toString());
         furniture.setFurnitureAttribute(furnitureAttribute.getText().toString());
         furniture.setFurnitureImg(changeImagePath);
