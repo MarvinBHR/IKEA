@@ -90,9 +90,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             Alert("数据库错误","请联系客服人员");//出现同名（可能因测试数据产生）
         }else{
             Member member = members.get(0);
-            Intent intent = new Intent(MainActivity.this,Home.class);
-            intent.putExtra("member_data",member);
-            startActivity(intent);
+            if(member.isForbid()){
+                Alert("警告","您的账户已被冻结，请联系管理员！");
+            }else {
+                Intent intent = new Intent(MainActivity.this, Home.class);
+                intent.putExtra("member_data", member);
+                startActivity(intent);
+            }
         }
     }
    private void Alert(String title,String message){

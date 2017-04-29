@@ -312,6 +312,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         member.setPhone(phoneToSave);
         member.setAddress(addressToSave);
         member.setHeadPic(headPicToSave);
+        member.setForbid(false);
         member.save();
         Intent intent = new Intent();
         intent.putExtra("register","ok");

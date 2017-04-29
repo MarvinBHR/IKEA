@@ -201,15 +201,28 @@
             </LinearLayout>
         </LinearLayout>
         <!--添加产品完-->
-        <!--查看会员-->
-        <ListView
+        <!--查看报表-->
+        <LinearLayout
             android:id="@+id/check_member"
             android:visibility="gone"
+            android:orientation="vertical"
             android:layout_marginTop="?attr/actionBarSize"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </ListView>
-        <!--查看会员完-->
+            <Button
+                android:id="@+id/check_member_by_sex"
+                android:layout_margin="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="按性别查看"/>
+            <Button
+                android:id="@+id/check_member_by_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:text="按年龄查看"/>
+        </LinearLayout>
+        <!--查看报表完-->
         <!--管理员资料-->
         <LinearLayout
             android:orientation="vertical"

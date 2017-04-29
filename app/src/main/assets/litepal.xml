@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <litepal>
     <dbname value="IKEA"/>
-    <version value="6" />
+    <version value="9" />
     <list>
         <mapping class="com.example.IKEA.db.Member"/>
         <mapping class="com.example.IKEA.db.Furniture"/>

@@ -98,7 +98,9 @@ public class Home extends BaseActivity implements View.OnClickListener {
     //当前登录人员
     private Member member = new Member();
     //查看会员
-    private ListView checkMember;
+    private LinearLayout checkMember;
+    private Button checkMemberBySex;
+    private Button checkMemberByAge;
     //查看管理员
     private LinearLayout showManager;
     @Override
@@ -122,8 +124,10 @@ public class Home extends BaseActivity implements View.OnClickListener {
         name = (TextView) header.findViewById(R.id.nav_name);
         email = (TextView) header.findViewById(R.id.nav_email);
         navHeadPic = (CircleImageView) header.findViewById(R.id.nav_head_pic);
+        checkMemberBySex = (Button)findViewById(R.id.check_member_by_sex);
+        checkMemberByAge = (Button)findViewById(R.id.check_member_by_age);
         //隐藏在主页上的内容
-        checkMember = (ListView)findViewById(R.id.check_member);
+        checkMember = (LinearLayout)findViewById(R.id.check_member);
         addFurniture = (LinearLayout)findViewById(R.id.add_furniture);
         showManager = (LinearLayout) findViewById(R.id.show_manager);
         title.setText(member.getMemberName());
@@ -158,6 +162,10 @@ public class Home extends BaseActivity implements View.OnClickListener {
                         break;
                     case R.id.nav_show_forms://查看报表
                         checkMember();
+                        break;
+                    case R.id.nav_manager_member://管理会员
+                        Intent intent10 = new Intent(Home.this,ManagerMember.class);
+                        startActivity(intent10);
                         break;
                     case R.id.nav_add_range://管理范围
                         Intent intent6 = new Intent(Home.this,AddRangeActivity.class);
@@ -277,6 +285,15 @@ public class Home extends BaseActivity implements View.OnClickListener {
                 break;
             case  R.id.add_furniture_ok://添加商品
                 saveAdd();
+                break;
+            case R.id.check_member_by_sex://按性别查看
+                Intent intent8 = new Intent(Home.this,CheckMemberBySex.class);
+                startActivity(intent8);
+                break;
+            case R.id.check_member_by_age://按年龄查看
+                Intent intent9 = new Intent(Home.this,CheckMemberByAge.class);
+                startActivity(intent9);
+                break;
             default:
                 break;
         }
@@ -515,25 +532,16 @@ public class Home extends BaseActivity implements View.OnClickListener {
     }
 
     //查看会员
-    //TODO 改为查看报表
     private void checkMember(){
         addFurniture.setVisibility(View.GONE);
         showManager.setVisibility(View.GONE);
         recyclerView.setVisibility(View.GONE);
         checkMember.setVisibility(View.VISIBLE);
-        List<Member> memberList = DataSupport.findAll(Member.class);
-        StringBuffer mList = new StringBuffer();
-        int i = 0;
-        for(Member m:memberList){
-            if(!m.getMemberName().equals("Manager")) {
-                String aMember = "姓名：" + m.getMemberName() + " 年龄：" + m.getAge() + " 性别：" + m.getSex() + ",";
-                mList.append(aMember);
-            }
-        }
-        String[] mList1 = mList.toString().split(",");
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Home.this,android.R.layout.simple_list_item_1,mList1);
-        checkMember.setAdapter(adapter);
+        //关闭侧菜单
         drawer.closeDrawers();
+        //注册点击事件
+        checkMemberByAge.setOnClickListener(this);
+        checkMemberBySex.setOnClickListener(this);
     }
 
     //弹出警告

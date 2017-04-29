@@ -15,6 +15,10 @@
             android:icon="@drawable/ic_add"
             android:title="添加商品"/>
         <item
+            android:id="@+id/nav_manager_member"
+            android:icon="@drawable/ic_manage_user"
+            android:title="会员管理"/>
+        <item
             android:id="@+id/nav_show_forms"
             android:icon="@drawable/ic_show_forms"
             android:title="查看报表"/>

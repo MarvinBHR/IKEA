@@ -42,6 +42,9 @@
         <activity android:name=".CheckFormsActivity" />
         <activity android:name=".AddRangeActivity" />
         <activity android:name=".AddTypeActivity" />
+        <activity android:name=".CheckMemberBySex" />
+        <activity android:name=".CheckMemberByAge" />
+        <activity android:name=".ManagerMember"></activity>
     </application>
 
 </manifest>

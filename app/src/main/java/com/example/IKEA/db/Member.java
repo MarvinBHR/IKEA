@@ -2,8 +2,11 @@ package com.example.IKEA.db;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.Button;
 
 import org.litepal.crud.DataSupport;
+
+import java.util.List;
 
 /**
  * Created by Marvin on 2017/4/13.
@@ -18,7 +21,16 @@ public class Member extends DataSupport implements Parcelable{//用户
     private String phone;//电话
     private String address;//地址
     private String headPic;//头像
+    private boolean forbid;//是否禁止登录
     private long id;
+
+    public void setForbid(boolean forbid) {
+        this.forbid = forbid;
+    }
+
+    public boolean isForbid() {
+        return forbid;
+    }
 
     public void setId(long id) {
         this.id = id;
@@ -91,6 +103,7 @@ public class Member extends DataSupport implements Parcelable{//用户
     public String getSex() {
         return sex;
     }
+
 
     @Override
     public int describeContents() {
