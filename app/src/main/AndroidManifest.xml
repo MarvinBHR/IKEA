@@ -39,7 +39,6 @@
         <activity android:name=".ShoppingCar" />
         <activity android:name=".MyOrderActivity" />
         <activity android:name=".MyHistoryActivity" />
-        <activity android:name=".CheckFormsActivity" />
         <activity android:name=".AddRangeActivity" />
         <activity android:name=".AddTypeActivity" />
         <activity android:name=".CheckMemberBySex" />

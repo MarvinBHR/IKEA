@@ -183,7 +183,7 @@ public class Home extends BaseActivity implements View.OnClickListener {
                         break;
                     case R.id.nav_personal://会员资料
                         Intent intent =new Intent(Home.this,ChangeMember.class);
-                        intent.putExtra("memberId",member.getId());
+                        intent.putExtra("member_data",member);
                         drawer.closeDrawers();
                         startActivity(intent);
                         break;

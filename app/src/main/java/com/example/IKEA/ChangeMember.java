@@ -20,6 +20,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,9 +59,9 @@ public class ChangeMember extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_member);
         Intent intent = getIntent();
-        memberId = intent.getLongExtra("memberId",0);
         //初始化控件
-        memberToChange = DataSupport.find(Member.class,memberId);
+        memberToChange = (Member) intent.getParcelableExtra("member_data");
+        memberId  = memberToChange.getId();
         memberName = (EditText)findViewById(R.id.change_name);
         memberAge = (EditText)findViewById(R.id.change_age);
         memberAge.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -92,6 +93,7 @@ public class ChangeMember extends BaseActivity implements View.OnClickListener {
         memberPhone.setText(memberToChange.getPhone());
         memberAddress.setText(memberToChange.getAddress());
         Bitmap bitmap = BitmapFactory.decodeFile(memberToChange.getHeadPic());
+        sexToChange  = memberToChange.getSex();
         memberHedPic.setImageBitmap(bitmap);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -124,7 +126,6 @@ public class ChangeMember extends BaseActivity implements View.OnClickListener {
 
     //保存资料
     private void saveMember(){
-        Member member = new Member();
         List<Member> memberList = DataSupport.findAll(Member.class);
         for (Member m:memberList){
             if(m.getId() != memberId && m.getMemberName().equals(memberName.getText().toString())){
@@ -132,21 +133,25 @@ public class ChangeMember extends BaseActivity implements View.OnClickListener {
                 return;
             }
         }
-        member.setMemberName(memberName.getText().toString());
-        member.setAge(memberAge.getText().toString());
-        member.setSex(sexToChange);
-        member.setEmail(memberEmail.getText().toString());
-        member.setPhone(memberPhone.getText().toString());
-        member.setAddress(memberAddress.getText().toString());
-        if(imagePath != null){
-            member.setHeadPic(imagePath);
-        }else{
-            member.setHeadPic(memberToChange.getHeadPic());
+        if(TextUtils.isEmpty(memberName.getText().toString()) || TextUtils.isEmpty(memberAge.getText().toString()) ||TextUtils.isEmpty(sexToChange)||TextUtils.isEmpty(memberAddress.getText().toString())){
+            Alert("修改错误","有必填项未填");
+            return;
         }
-        member.update(memberId);
+        memberToChange.setMemberName(memberName.getText().toString());
+        memberToChange.setAge(memberAge.getText().toString());
+        memberToChange.setSex(sexToChange);
+        memberToChange.setEmail(memberEmail.getText().toString());
+        memberToChange.setPhone(memberPhone.getText().toString());
+        memberToChange.setAddress(memberAddress.getText().toString());
+        if(imagePath != null){
+            memberToChange.setHeadPic(imagePath);
+        }else{
+            memberToChange.setHeadPic(memberToChange.getHeadPic());
+        }
+        memberToChange.update(memberId);
         Toast.makeText(ChangeMember.this,"修改成功",Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(ChangeMember.this,Home.class);
-        intent.putExtra("member_data",member);
+        intent.putExtra("member_data",memberToChange);
         startActivity(intent);
     }
 
