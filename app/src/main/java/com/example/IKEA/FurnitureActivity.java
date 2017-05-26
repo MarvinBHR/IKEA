@@ -174,6 +174,7 @@ public class FurnitureActivity extends BaseActivity implements View.OnClickListe
                             memberOrder.setFurnitureAmount(amount+1);
                             memberOrder.setTotalPrice(total+furniturePrice);
                             memberOrder.update(sameId);
+                            Toast.makeText(FurnitureActivity.this,"已添加至购物车",Toast.LENGTH_SHORT).show();
                         }
                     });
                     dialog2.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -192,6 +193,7 @@ public class FurnitureActivity extends BaseActivity implements View.OnClickListe
                     memberOrder.setCreate(false);
                     memberOrder.setDeleteFlag(false);
                     memberOrder.save();
+                    Toast.makeText(FurnitureActivity.this,"已添加至购物车",Toast.LENGTH_SHORT).show();
                 }
             }
         });

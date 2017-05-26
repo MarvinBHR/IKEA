@@ -47,7 +47,8 @@ public class MyHistoryActivity extends BaseActivity{
     }
 
     private boolean initHistory(){
-        memberOrderList = DataSupport.where("create = ? and pay = ? and memberId = ?","1","1",member.getId()+"").find(MemberOrder.class);
+        memberOrderList = DataSupport.where("create = ? and pay = ? and memberId = ?","1","1"
+                ,member.getId()+"").find(MemberOrder.class);
         if(memberOrderList.size()>0){
             for(MemberOrder mo:memberOrderList){
                 totalPrice += mo.getTotalPrice();

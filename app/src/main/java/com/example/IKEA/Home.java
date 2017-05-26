@@ -501,7 +501,9 @@ public class Home extends BaseActivity implements View.OnClickListener {
         String furnitureImgToSave = addImagePath;
         boolean same = false;
         //检测
-        if(TextUtils.isEmpty(furnitureAttributeToSave)||TextUtils.isEmpty(furnitureNameToSave)||TextUtils.isEmpty(furnitureTypeToSave)||TextUtils.isEmpty(furnitureRangeToSave)||furniturePriceToSave == 0||TextUtils.isEmpty(furnitureDescribeToSave)){
+        if(TextUtils.isEmpty(furnitureAttributeToSave)||TextUtils.isEmpty(furnitureNameToSave)
+                ||TextUtils.isEmpty(furnitureTypeToSave)||TextUtils.isEmpty(furnitureRangeToSave)||
+                furniturePriceToSave == 0||TextUtils.isEmpty(furnitureDescribeToSave)){
             Alert("添加错误","有必填项未填");
             return;
         }
